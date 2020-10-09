@@ -1,0 +1,49 @@
+---
+title: "KMeans"
+output: Kmeans
+---
+
+
+```{r}
+install.packages("factoextra")
+library(factoextra)
+```
+Conjunto IRIS
+```{r}
+iris
+
+```
+
+Gerando o cluster 
+
+```{r}
+cluster = kmeans(iris[1:4], centers = 3)
+cluster
+table(iris$Species, cluster$cluster)
+
+```
+
+Gráficos
+```{r}
+
+plot(iris$Sepal.Length, iris$Sepal.Width, col = cluster$cluster, pch = 20, main = "iris")
+plot(iris[,1:4], col=cluster$cluster, main="Iris")
+
+```
+
+Gráfico especializado
+```{r}
+g2 = fviz_cluster(cluster, data=iris[1:4], ellipse.type = "norm", ggtheme = theme_dark(), main = "Cluster")
+plot(g2)
+
+
+```
+
+Adicionamos o cluster aos dados originais
+
+```{r}
+iris2 = iris
+iris2['grupos'] = cluster$cluster
+iris2
+
+```
